@@ -1,0 +1,19 @@
+tags
+*.swp
+*~
+spec_order*
+.rvmrc
+Gemfile.local
+.bin
+.rubocop.yml
+test.conf
+repo_configs
+.lein*
+.nrepl-port
+.idea
+*\.iml
+*\.py[co]
+
+# C++ stuff
+\.ycm_extra_conf\.py
+compile_commands.json
