@@ -28,5 +28,6 @@ fi
 dot_install_gnu .gitignore
 dot_install_gnu .spacemacs
 dot_install_gnu .xmonad
+dot_install_gnu .xinitrc
 
 # TODO: Install spacemacs
