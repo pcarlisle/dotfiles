@@ -141,7 +141,7 @@ values."
      emacs-lisp
      semantic
      haskell
-     ;; ruby
+     ruby
      markdown
      puppet
      evernote
@@ -150,6 +150,7 @@ values."
      colors
      windows-scripts
      javascript
+     sql
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -349,7 +350,7 @@ user code."
 
   (setq mouse-yank-at-point t)
 
-  (setq-default ruby-version-manager 'rbenv)
+  ;; (setq-default ruby-version-manager 'rbenv)
   )
 
 (defun my-c-hook ()
@@ -367,7 +368,10 @@ user code."
   (put 'HEAD 'clojure-backtracking-indent '(2))
   (put 'ANY 'clojure-backtracking-indent '(2))
   (put 'context 'clojure-backtracking-indent '(2))
+
   (put 'defservice 'clojure-backtracking-indent '((2)))
+  (put 'defservice 'clojure-indent-function '(1 nil nil (1)))
+  (put 'defui 'clojure-indent-function '(1 nil nil (1)))
   (put 'try+ 'clojure-indent-function 0)
   )
 
