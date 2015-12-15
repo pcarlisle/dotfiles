@@ -30,5 +30,6 @@ dot_install_gnu .spacemacs
 dot_install_gnu .xmonad
 dot_install_gnu .xinitrc
 dot_install_gnu .xmobarrc
+dot_install_gnu .lein
 
 # TODO: Install spacemacs
