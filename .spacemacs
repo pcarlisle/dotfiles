@@ -123,34 +123,34 @@ values."
      ;; --------------------------------------------------------
      auto-completion
      better-defaults
+     (c-c++ :variables
+            c-c++-enable-clang-support t
+            c-c++-default-mode-for-headers 'c++-mode)
+     (clojure :variables
+              cljr-favor-prefix-notation nil)
+     colors
+     emacs-lisp
+     evernote
+     evil-commentary
      (git :variables
           git-gutter-use-fringe nil
           magit-repo-dirs '("~/work/"))
      github
-     ;; markdown
-     org
-     syntax-checking
-     (clojure :variables
-              cljr-favor-prefix-notation nil)
-     evil-commentary
-     restclient
-     (c-c++ :variables
-            c-c++-enable-clang-support t
-            c-c++-default-mode-for-headers 'c++-mode)
-     ;; irony-mode
-     emacs-lisp
-     semantic
      haskell
-     ruby
-     markdown
-     puppet
-     evernote
-     python
-     ycmd
-     colors
-     windows-scripts
      javascript
+     markdown
+     org
+     puppet
+     python
+     restclient
+     ruby
+     semantic
+     shell-scripts
      sql
+     syntax-checking
+     windows-scripts
+     yaml
+     ycmd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -186,7 +186,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'doge
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
@@ -310,6 +310,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   (setq clojure-docstring-fill-column 72)
 
+  (setq org-startup-with-inline-images t)
   (defun pbc--extract-ns-list (req-str)
     (s-split "\\."
              (car (s-split " " (cljr--extract-sexp-content req-str)))))
@@ -393,6 +394,8 @@ layers configuration."
   (set-variable 'ycmd-global-config "/home/patrick/.emacs.d/private/ycm_global_conf.py")
   (my-clojure-indents)
   (setq evil-move-beyond-eol nil)
+  (global-evil-mc-mode 1)
+  (global-evil-search-highlight-persist 0)
 )
 
 
