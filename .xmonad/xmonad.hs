@@ -69,6 +69,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_l), sendMessage MirrorExpand)
     , ((modm, xK_p), spawn "exe=`yeganesh -x -- -fn 'Consolas' -nb '#222222'` && eval \"exec $exe\"")
     , ((modm, xK_Print), spawn "xfce4-screenshooter -rc")
+    , ((modm, xK_c), spawn "xfce4-screenshooter -rc")
     ]
 
 
