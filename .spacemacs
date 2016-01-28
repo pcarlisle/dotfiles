@@ -397,6 +397,8 @@ layers configuration."
   (global-evil-mc-mode 1)
   (global-evil-search-highlight-persist 0)
   (setq vc-follow-symlinks t)
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
 )
 
 
