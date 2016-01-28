@@ -31,5 +31,8 @@ dot_install_gnu .xmonad
 dot_install_gnu .xinitrc
 dot_install_gnu .xmobarrc
 dot_install_gnu .lein
+dot_install_gnu .zshenv
+dot_install_gnu .zshrc
+dot_install_gnu .zshalias
 
 # TODO: Install spacemacs
