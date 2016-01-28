@@ -32,7 +32,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting)
+plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting safe-paste)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -55,11 +55,25 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey "${terminfo[kcuu1]}" history-substring-search-up      # start typing + [Up-Arrow] - fuzzy find history forward
 bindkey "${terminfo[kcud1]}" history-substring-search-down    # start typing + [Down-Arrow] - fuzzy find history backward
 
+export PATH=${HOME}/bin:/usr/local/bin:/opt/bin:/opt/local/bin:/opt/local/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/games/bin
+
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 unsetopt correctall
 
 source ~/.zshalias
+
+export RUBYLIB=''
+export WORKDIR='/home/patrick/work'
+# export FACTER_LOCATION="file://$WORKDIR/facter"
+export PUPPET_LOCATION="file://$WORKDIR/puppet"
+
+# Use local beaker
+export RUBYLIB=${WORKDIR}/beaker/lib:${RUBYLIB}
+export PATH=${PATH}:${WORKDIR}/beaker/bin
+
+export RUST_SRC_PATH="${HOME}/src/rust/src"
 
 # Fix stupid oh-my-zsh LSCOLORS
 unset LSCOLORS
