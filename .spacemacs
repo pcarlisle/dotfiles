@@ -396,6 +396,7 @@ layers configuration."
   (setq evil-move-beyond-eol nil)
   (global-evil-mc-mode 1)
   (global-evil-search-highlight-persist 0)
+  (setq vc-follow-symlinks t)
 )
 
 
