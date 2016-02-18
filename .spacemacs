@@ -401,6 +401,7 @@ layers configuration."
   (setq-default js-indent-level 2)
   (setq-default cider-inject-dependencies-at-jack-in nil)
   (setq exec-path-from-shell-check-startup-files nil)
+  (setq dotspacemacs-distinguish-gui-tab t)
 )
 
 
