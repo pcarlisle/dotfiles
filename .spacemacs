@@ -399,8 +399,8 @@ layers configuration."
   (setq vc-follow-symlinks t)
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
-
   (setq-default cider-inject-dependencies-at-jack-in nil)
+  (setq exec-path-from-shell-check-startup-files nil)
 )
 
 
@@ -419,10 +419,8 @@ layers configuration."
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(package-selected-packages
-   (quote
-    (clojure-mode ycmd haskell-mode multiple-cursors magit spacemacs-theme spaceline shm rspec-mode robe pyvenv powershell pip-requirements persp-mode pcre2el paradox page-break-lines orgit org-pomodoro org-plus-contrib neotree move-text markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep linum-relative leuven-theme js-doc info+ help-fns+ helm-swoop helm-projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate github-clone github-browse-file git-timemachine git-messenger gist flycheck-ycmd flycheck-pos-tip flycheck-haskell flycheck fish-mode exec-path-from-shell evil-surround evil-search-highlight-persist evil-mc evil-magit evil-jumper evil-exchange evil-escape elisp-slime-nav company-ycmd company-tern company-quickhelp company-ghc company-cabal company-anaconda coffee-mode clj-refactor cider bundler buffer-move auto-yasnippet anaconda-mode align-cljlet aggressive-indent ace-link auto-complete avy packed company highlight anzu smartparens request projectile helm helm-core yasnippet js2-mode json-reformat pythonic s quelpa package-build use-package which-key bind-key bind-map evil dash yaml-mode ws-butler window-numbering web-beautify volatile-highlights vi-tilde-fringe undo-tree toc-org stickyfunc-enhance srefactor sql-indent solarized-theme smooth-scrolling smeargle seq rvm ruby-tools ruby-test-mode rubocop restclient restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode puppet-mode powerline pos-tip popwin pcache paredit org-repo-todo org-present org-bullets open-junk-file mmm-mode lorem-ipsum logito let-alist json-mode js2-refactor inflections inf-ruby indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-pydoc helm-mode-manager helm-make helm-gitignore goto-chg golden-ratio gnuplot gitconfig-mode gitattributes-mode git-link gh-md geeknote flx-ido fill-column-indicator fancy-battery f expand-region evil-visualstar evil-tutor evil-numbers evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-commentary evil-args evil-anzu edn disaster define-word dash-functional cython-mode company-statistics company-c-headers cmm-mode cmake-mode clean-aindent-mode clang-format cider-eval-sexp-fu chruby auto-highlight-symbol auto-compile alert adaptive-wrap ace-window ace-jump-helm-line ac-ispell)))
- '(ring-bell-function (quote ignore)))
+ '(exec-path-from-shell-check-startup-files nil)
+ '(ring-bell-function (quote ignore) t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
