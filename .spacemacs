@@ -399,7 +399,19 @@ layers configuration."
   (setq vc-follow-symlinks t)
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
+
+  ;; cider
   (setq-default cider-inject-dependencies-at-jack-in nil)
+  (setq-default cider-overlays-use-font-lock t)
+  (add-hook 'cider-connected-hook #'cider-refresh)
+  (setq-default nrepl-hide-special-buffers t)
+  (setq-default cider-connection-message-fn nil)
+  ;; try having overlays last indefinitely
+  (setq-default cider-eval-result-duration nil)
+  ;; (setq-default cider-use-overlays 'both) ;; default both
+
+  ;; (setq-default cider-repl-display-help-banner nil)
+
   (setq exec-path-from-shell-check-startup-files nil)
   (setq dotspacemacs-distinguish-gui-tab t)
 )
