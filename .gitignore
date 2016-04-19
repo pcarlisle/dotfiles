@@ -13,6 +13,7 @@ repo_configs
 .idea
 *\.iml
 *\.py[co]
+junit/
 
 # C++ stuff
 \.ycm_extra_conf\.py
