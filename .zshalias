@@ -1,15 +1,15 @@
-function tree() {
-    #echo -e "\033[1;37m"
-
-    (cd ${1-.} ; pwd)
-    find ${1-.} -print 2>/dev/null | sort | sed \
-        -e "s,^${1-.},,"                   \
-        -e "/^$/d"                         \
-        -e "s,[^/]*/\([^/]*\)$,\  |-- \1,"  \
-        -e "s,[^/]*/,  |   ,g"
-
-    #echo -e "\033[0m"
-}
+# function tree() {
+#     #echo -e "\033[1;37m"
+# 
+#     (cd ${1-.} ; pwd)
+#     find ${1-.} -print 2>/dev/null | sort | sed \
+#         -e "s,^${1-.},,"                   \
+#         -e "/^$/d"                         \
+#         -e "s,[^/]*/\([^/]*\)$,\  |-- \1,"  \
+#         -e "s,[^/]*/,  |   ,g"
+# 
+#     #echo -e "\033[0m"
+# }
 
 
 function color_example() {
@@ -97,7 +97,7 @@ function mergepull() {
         echo -e "Usage: mergepull user:refspec"
         return 1
     fi
-    
+
     user=$(echo "$1" | cut -d: -f1)
     refspec=$(echo "$1" | cut -d: -f2) 
 
@@ -118,7 +118,7 @@ function called() {
         return 1
     fi
 
-    ack "(^\s*|\.)\K$1\b" lib
+    ag "(^\s*|\.)\K$1\b" $2
 }
 
 function nexus_releases() {
@@ -128,8 +128,16 @@ function nexus_releases() {
     done
 }
 
-function delete_vm() {
-    curl -X DELETE http://vcloud.delivery.puppetlabs.net/vm/${1}
+function get_vmpooler_key() {
+    ruby -ryaml -e 'print YAML.load(File.read("/home/patrick/.fog"))[:default][:vmpooler_token]'
+}
+function get_vmpooler_vm_types() {
+    curl -sk http://vmpooler.delivery.puppetlabs.net/api/v1/vm | jq '.[]'
+}
+function get_vmpooler_vm() {
+    curl -sk -X POST -d "{\"${1-redhat-7-x86_64}\":\"1\"}" -H X-AUTH-TOKEN:$(get_vmpooler_key) --url https://vmpooler.delivery.puppetlabs.net/api/v1/vm | jq '.'
 }
 
-alias delvm delete_vm
+function delete_vmpooler_vm() {
+    curl -sk -X DELETE -H X-AUTH-TOKEN:$(get_vmpooler_key) --url https://vmpooler.delivery.puppetlabs.net/api/v1/vm/${1} | jq '.'
+}
