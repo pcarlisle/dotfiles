@@ -121,13 +121,23 @@ values."
      ;; Example of useful layers you may want to use right away
      ;; Uncomment a layer name and press C-c C-c to install it
      ;; --------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t)
      better-defaults
      (c-c++ :variables
             c-c++-enable-clang-support t
             c-c++-default-mode-for-headers 'c++-mode)
      (clojure :variables
-              cljr-favor-prefix-notation nil)
+              cljr-favor-prefix-notation nil
+              cider-inject-dependencies-at-jack-in nil
+              cider-overlays-use-font-lock t
+              nrepl-hide-special-buffers t
+              cider-connection-message-fn nil
+              ;; try having overlays last indefinitely
+              cider-eval-result-duration nil
+              ;; cider-use-overlays 'both ;; default both
+              cider-repl-use-pretty-printing t
+              cider-repl-display-help-banner nil)
      colors
      emacs-lisp
      evernote
@@ -139,7 +149,10 @@ values."
      haskell
      javascript
      markdown
-     org
+     (nand2tetris :variables
+                  nand2tetris-core-base-dir "~/projects/nand2tetris")
+     (org :variables
+          org-enable-github-support t)
      puppet
      python
      restclient
@@ -401,19 +414,17 @@ layers configuration."
   (setq-default js-indent-level 2)
 
   ;; cider
-  (setq-default cider-inject-dependencies-at-jack-in nil)
-  (setq-default cider-overlays-use-font-lock t)
   (add-hook 'cider-connected-hook #'cider-refresh)
-  (setq-default nrepl-hide-special-buffers t)
-  (setq-default cider-connection-message-fn nil)
-  ;; try having overlays last indefinitely
-  (setq-default cider-eval-result-duration nil)
-  ;; (setq-default cider-use-overlays 'both) ;; default both
-
-  ;; (setq-default cider-repl-display-help-banner nil)
 
   (setq exec-path-from-shell-check-startup-files nil)
   (setq dotspacemacs-distinguish-gui-tab t)
+
+  (setq solarized-scale-org-headlines nil)
+
+  (setq x-select-enable-primary t)  ; emacs 24
+  (setq select-enable-primary t)  ; emacs 25
+
+  (setq evil-want-fine-undo nil)
 )
 
 
@@ -424,11 +435,11 @@ layers configuration."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil t)
- '(ahs-default-range (quote ahs-range-whole-buffer) t)
- '(ahs-idle-interval 0.25 t)
+ '(ahs-case-fold-search nil)
+ '(ahs-default-range (quote ahs-range-whole-buffer))
+ '(ahs-idle-interval 0.25)
  '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil t)
+ '(ahs-inhibit-face-list nil)
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
