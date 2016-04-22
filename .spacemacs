@@ -141,6 +141,7 @@ values."
      colors
      emacs-lisp
      evernote
+     evil-cleverparens
      evil-commentary
      (git :variables
           git-gutter-use-fringe nil
@@ -157,6 +158,8 @@ values."
      python
      restclient
      ruby
+     (rust :variables
+           rust-racer-enable t)
      semantic
      shell-scripts
      sql
@@ -425,6 +428,8 @@ layers configuration."
   (setq select-enable-primary t)  ; emacs 25
 
   (setq evil-want-fine-undo nil)
+
+  (spacemacs/toggle-evil-cleverparens-on)
 )
 
 

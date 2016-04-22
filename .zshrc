@@ -55,7 +55,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey "${terminfo[kcuu1]}" history-substring-search-up      # start typing + [Up-Arrow] - fuzzy find history forward
 bindkey "${terminfo[kcud1]}" history-substring-search-down    # start typing + [Down-Arrow] - fuzzy find history backward
 
-export PATH=${HOME}/bin:/usr/local/bin:/opt/bin:/opt/local/bin:/opt/local/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/games/bin
+export PATH=${HOME}/bin:${HOME}/.cargo/bin:/usr/local/bin:/opt/bin:/opt/local/bin:/opt/local/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/games/bin
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
