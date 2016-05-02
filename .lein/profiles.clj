@@ -6,7 +6,9 @@
                        [alembic "0.3.2"]
                        [org.clojure/tools.nrepl "0.2.12"]
                        ; [org.clojure/clojure "1.8.0"]
-                       ]}
+                       ]
+        :jvm-opts ["-Xmx512m"]
+        }
  :user {:plugins [[jonase/eastwood "0.2.3" :exclusions [org.clojure/clojure]]
                   [venantius/yagni "0.1.4" :exclusions [org.clojure/clojure]]
                   ;; [io.aviso/pretty "0.1.26" :exclusions [org.clojure/clojure]]

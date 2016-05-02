@@ -159,7 +159,9 @@ values."
      restclient
      ruby
      (rust :variables
-           rust-racer-enable t)
+           rust-enable-racer t
+           racer-cmd "/home/patrick/.cargo/bin/racer"
+           racer-rust-src-path "/home/patrick/src/rust/src")
      semantic
      shell-scripts
      sql
@@ -430,6 +432,8 @@ layers configuration."
   (setq evil-want-fine-undo nil)
 
   (spacemacs/toggle-evil-cleverparens-on)
+  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
 )
 
 
