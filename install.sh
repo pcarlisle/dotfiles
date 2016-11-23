@@ -37,6 +37,7 @@ dot_install_gnu .spacemacs
 dot_install_gnu .xinitrc
 dot_install_gnu .xmobarrc
 dot_install_gnu .xmonad
+dot_install_gnu .zprofile
 dot_install_gnu .zshalias
 dot_install_gnu .zshenv
 dot_install_gnu .zshrc

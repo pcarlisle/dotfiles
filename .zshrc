@@ -1,17 +1,8 @@
-# Path to your oh-my-zsh configuration.
+# Path to oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="random"
 ZSH_THEME="mrtazz"
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -28,8 +19,7 @@ DISABLE_AUTO_UPDATE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
-#export apt_pref='apt-get'
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting safe-paste zsh-completions)
@@ -55,23 +45,21 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey "${terminfo[kcuu1]}" history-substring-search-up      # start typing + [Up-Arrow] - fuzzy find history forward
 bindkey "${terminfo[kcud1]}" history-substring-search-down    # start typing + [Down-Arrow] - fuzzy find history backward
 
-export PATH=${HOME}/bin:${HOME}/.cargo/bin:/usr/local/bin:/opt/bin:/opt/local/bin:/opt/local/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/games/bin
-
-export PATH="$HOME/.rbenv/bin:$PATH"
+path=(~/.rbenv/bin $path)
 eval "$(rbenv init -)"
 
 unsetopt correctall
 
 source ~/.zshalias
 
-export RUBYLIB=''
 export WORKDIR='/home/patrick/work'
 # export FACTER_LOCATION="file://$WORKDIR/facter"
-export PUPPET_LOCATION="file://$WORKDIR/puppet"
+# export PUPPET_LOCATION="file://$WORKDIR/puppet"
 
+# export RUBYLIB=''
 # Use local beaker
-export RUBYLIB=${WORKDIR}/beaker/lib:${RUBYLIB}
-export PATH=${PATH}:${WORKDIR}/beaker/bin
+# export RUBYLIB=${WORKDIR}/beaker/lib:${RUBYLIB}
+# export PATH=${PATH}:${WORKDIR}/beaker/bin
 
 export RUST_SRC_PATH="${HOME}/src/rust/src"
 
