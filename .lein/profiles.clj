@@ -1,5 +1,5 @@
 {:repl {:plugins [
-                  [cider/cider-nrepl "0.14.0-SNAPSHOT"]
+                  [cider/cider-nrepl "0.14.0-SNAPSHOT" :exclusions [org.clojure/clojure]]
                   [refactor-nrepl "2.3.0-SNAPSHOT" :exclusions [org.clojure/clojure]]
                   ]
         :dependencies [
