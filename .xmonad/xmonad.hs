@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 import XMonad
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.PhysicalScreens
 import XMonad.Hooks.DynamicLog
 -- import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -67,11 +68,16 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_h), sendMessage MirrorShrink)
     , ((modm .|. shiftMask, xK_l), sendMessage MirrorExpand)
+    , ((modm, xK_w), viewScreen 0)
+    , ((modm, xK_e), viewScreen 1)
+    , ((modm, xK_r), viewScreen 2)
+    , ((modm .|. shiftMask, xK_w), sendToScreen 0)
+    , ((modm .|. shiftMask, xK_e), sendToScreen 1)
+    , ((modm .|. shiftMask, xK_r), sendToScreen 2)
     , ((modm, xK_p), spawn "exe=`yeganesh -x -- -fn 'Consolas' -nb '#222222'` && eval \"exec $exe\"")
     , ((modm, xK_Print), spawn "xfce4-screenshooter -rc")
     , ((modm, xK_c), spawn "xfce4-screenshooter -rc")
     ]
-
 
 -- width of screen is 1920 no it's not
 dzenCommand = "dzen2 -e 'onstart=lower' -w 2000 -ta l -fg '#a8a3f7' -bg '#3f3c6d'"
