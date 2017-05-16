@@ -13,7 +13,11 @@ fi
 
 # For use with gnu coreutils
 dot_install_gnu() {
-    "$LN" --backup=numbered -sv "${BASEDIR}/$1" "${HOME}/$1"
+    local target="${BASEDIR}/$1"
+    local link="${HOME}/$1"
+    if [ "$(realpath ${link})" != "${target}" ]; then
+        "$LN" --backup=numbered -sv "${target}" "${link}"
+    fi
 }
 
 set -e
@@ -26,6 +30,7 @@ fi
 
 # Install
 dot_install_gnu .gitignore
+dot_install_gnu .gitconfig
 dot_install_gnu .spacemacs
 dot_install_gnu .xmonad
 dot_install_gnu .xinitrc

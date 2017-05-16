@@ -1,0 +1,37 @@
+[user]
+    name = Patrick Carlisle
+    email = patrick@puppetlabs.com
+[core]
+    excludesfile = /home/patrick/.gitignore
+    whitespace = trailing-space,space-before-tab
+
+[color]
+    ui = auto
+
+[alias]
+    review = log -p --reverse -M -C -C --patience --no-prefix
+    review-topic = !sh -c 'git review ${1}^1..${1}^2' -
+    view-topic = !sh -c 'git log --reverse ${1}^1..${1}^2' -
+    lg = "log --pretty=format:'%C(yellow)%h%C(reset) %s %C(cyan)%cr%C(reset) %C(blue)%an%C(reset) %C(green)%d%C(reset)' --graph --date-order"
+    ff = "pull --ff-only --ff"
+    ra = "!f() { git remote add $1 git@github.com:$1/$(basename $(git config --local remote.origin.url)); git remote -v;}; f"
+    raf = "!f() { git remote add $1 git@github.com:$1/$(basename $(git config --local remote.origin.url)); git fetch $1;}; f"
+    fetch-pull = fetch origin refs/pull/${1}/head
+    merge-pull = merge origin refs/pull/${1}/head
+    edit = !sh -c 'vim `git diff --name-only ${1-HEAD~} ${2}`'
+    pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+
+[merge]
+    conflictstyle = diff3
+    tool = extmerge
+
+[mergetool "extmerge"]
+    cmd = ~/bin/extmerge.sh \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+
+[url "git@github.com:puppetlabs/"]
+    insteadOf = puppetlabs:
+[url "git@github.com:pcarlisle/"]
+    insteadOf = pcarlisle:
+[include]
+	  path = ~/.gitconfig.local
