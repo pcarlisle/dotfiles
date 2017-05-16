@@ -3,7 +3,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 
 export RUBYLIB=''
 export WORKDIR='/home/patrick/work'
-export FACTER_LOCATION="file://$WORKDIR/facter"
+# export FACTER_LOCATION="file://$WORKDIR/facter"
 export PUPPET_LOCATION="file://$WORKDIR/puppet"
 
 # Use local beaker
