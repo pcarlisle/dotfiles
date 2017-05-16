@@ -32,7 +32,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting safe-paste)
+plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting safe-paste zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,3 +106,5 @@ export TERM=xterm-256color
 
 # added by travis gem
 [ -f /home/patrick/.travis/travis.sh ] && source /home/patrick/.travis/travis.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
