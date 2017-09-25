@@ -32,6 +32,9 @@ fi
 /usr/lib/gnome-settings-daemon/gnome-settings-daemon &
 xfce4-power-manager &
 xfce4-volumed-pulse &
+xfce4-clipman &
+
+xscreensaver -no-splash &
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
