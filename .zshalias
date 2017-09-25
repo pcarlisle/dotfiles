@@ -135,9 +135,14 @@ function get_vmpooler_vm_types() {
     curl -sk http://vmpooler.delivery.puppetlabs.net/api/v1/vm | jq '.[]'
 }
 function get_vmpooler_vm() {
-    curl -sk -X POST -d "{\"${1-redhat-7-x86_64}\":\"1\"}" -H X-AUTH-TOKEN:$(get_vmpooler_key) --url https://vmpooler.delivery.puppetlabs.net/api/v1/vm | jq '.'
+    curl -sk -X POST -d "{\"${1-redhat-7-x86_64}\":\"1\"}" -H X-AUTH-TOKEN:$(get_vmpooler_key) --url https://vmpooler.delivery.puppetlabs.net/api/v1/vm | jq '[.[].hostname?,.domain]|join(".")' | tr -d '"'
 }
 
 function delete_vmpooler_vm() {
     curl -sk -X DELETE -H X-AUTH-TOKEN:$(get_vmpooler_key) --url https://vmpooler.delivery.puppetlabs.net/api/v1/vm/${1} | jq '.'
+}
+
+function install_pe() {
+    echo "install_pe" > /tmp/pre_suite.rb
+    BEAKER_PE_DIR=http://enterprise.delivery.puppetlabs.net/${1:-2017.3}/ci-ready beaker -h ${2:-centos7-64mdcal} --keyfile ~/.ssh/id_rsa-acceptance --preserve-hosts --pre-suite /tmp/pre_suite.rb
 }
