@@ -35,3 +35,5 @@
     insteadOf = pcarlisle:
 [include]
 	  path = ~/.gitconfig.local
+[magit]
+	hideCampaign = true
