@@ -165,14 +165,14 @@ values."
      haskell
      javascript
      markdown
-     (nand2tetris :variables
-                  nand2tetris-core-base-dir "~/projects/nand2tetris")
      (org :variables
           org-enable-github-support t)
      puppet
      python
      restclient
-     ruby
+     (ruby :variables
+           ruby-test-runner 'rspec
+           ruby-version-manager 'rbenv)
      (rust :variables
            rust-enable-racer t
            racer-cmd "/home/patrick/.cargo/bin/racer"
@@ -193,7 +193,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(magithub)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -569,3 +569,45 @@ layers configuration."
  ;; If there is more than one, they won't work right.
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ahs-case-fold-search nil t)
+ '(ahs-default-range (quote ahs-range-whole-buffer) t)
+ '(ahs-idle-interval 0.25 t)
+ '(ahs-idle-timer 0 t)
+ '(ahs-inhibit-face-list nil t)
+ '(browse-url-firefox-program "firefox-nightly")
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(evil-want-Y-yank-to-eol nil)
+ '(exec-path-from-shell-check-startup-files nil)
+ '(package-selected-packages
+   (quote
+    (org-category-capture evil-lion imenu-list restclient-helm helm-purpose unfill monokai-theme editorconfig diff-hl let-alist browse-at-remote window-purpose wgrep smex ivy-purpose ivy-hydra counsel-projectile counsel swiper ivy realgud test-simple load-relative dante prodigy minitest insert-shebang hide-comnt yapfify yaml-mode ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org stickyfunc-enhance srefactor sql-indent spacemacs-theme spaceline powerline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort puppet-mode powershell popwin pip-requirements persp-mode pcre2el paradox ox-gfm orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file ob-http neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-hoogle helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md geeknote flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-haskell flycheck flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens smartparens evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump disaster diminish deft define-word cython-mode company-ycmd ycmd request-deferred request deferred company-tern dash-functional tern company-statistics company-shell company-quickhelp pos-tip company-ghci company-ghc ghc haskell-mode company-cabal company-c-headers company-anaconda company column-enforce-mode color-identifiers-mode coffee-mode cmm-mode cmake-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit peg clean-aindent-mode clang-format cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl chruby cargo rust-mode bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build solarized-theme dash)))
+ '(ring-bell-function (quote ignore))
+ '(safe-local-variable-values
+   (quote
+    ((eval setq flycheck-command-wrapper-function
+           (lambda
+             (command)
+             (append
+              (quote
+               ("bundle" "exec"))
+              command)))))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+)
