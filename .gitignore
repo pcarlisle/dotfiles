@@ -25,3 +25,4 @@ compile_commands.json
 \.xmonad/xmonad.hi
 \.xmonad/xmonad.o
 tmp/
+.dir-locals.el
