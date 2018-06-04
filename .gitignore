@@ -26,3 +26,7 @@ compile_commands.json
 \.xmonad/xmonad.o
 tmp/
 .dir-locals.el
+.meghanada
+.ensime
+
+.byebug_history
