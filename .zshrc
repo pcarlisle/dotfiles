@@ -22,7 +22,7 @@ DISABLE_AUTO_UPDATE="true"
 # plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby python zsh-history-substring-search nyan zsh-syntax-highlighting safe-paste zsh-completions)
+plugins=(git ruby python history-substring-search nyan zsh-syntax-highlighting safe-paste zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -63,8 +63,12 @@ export WORKDIR='/home/patrick/work'
 
 export RUST_SRC_PATH="${HOME}/src/rust/src"
 
-# Fix stupid oh-my-zsh LSCOLORS
-unset LSCOLORS
+export JAVA_HOME=/usr/lib/jvm/default
+export FLAMEGRAPH_DIR="${HOME}/work/FlameGraph"
+
+# Set up nice ls colors
+eval "$(dircolors .dircolors)"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 PAGER=less;  	export PAGER
 
@@ -96,3 +100,7 @@ export TERM=xterm-256color
 [ -f /home/patrick/.travis/travis.sh ] && source /home/patrick/.travis/travis.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias git=hub
+
+export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"

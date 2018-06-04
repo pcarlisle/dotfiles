@@ -1,2 +1,2 @@
 set -U path
-path=(~/bin ~/.cargo/bin $path)
+path=(~/bin ~/go/bin ~/.cargo/bin $path)
