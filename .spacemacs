@@ -397,7 +397,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling nil
+   dotspacemacs-smooth-scrolling t
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -440,6 +440,8 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   (setq clojure-docstring-fill-column 72)
+
+  (setq exec-path-from-shell-check-startup-files nil)
 
   (setq org-startup-with-inline-images t)
   (defun pbc--extract-ns-list (req-str)
@@ -541,8 +543,6 @@ layers configuration."
 
   ;; cider
   (add-hook 'cider-connected-hook #'cider-refresh)
-
-  (setq exec-path-from-shell-check-startup-files nil)
 
   (setq solarized-scale-org-headlines nil)
 
