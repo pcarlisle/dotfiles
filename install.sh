@@ -33,6 +33,7 @@ dot_install_gnu .gemrc
 dot_install_gnu .gitconfig
 dot_install_gnu .gitignore
 dot_install_gnu .lein
+dot_install_gnu .ripgreprc
 dot_install_gnu .spacemacs
 dot_install_gnu .xinitrc
 dot_install_gnu .xmobarrc
