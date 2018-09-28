@@ -159,6 +159,7 @@ values."
      evernote
      ;; evil-cleverparens
      evil-commentary
+     floobits
      (go :variables
          go-tab-width 4)
      (git :variables
