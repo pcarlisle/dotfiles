@@ -142,6 +142,7 @@ values."
             c-c++-enable-clang-support t
             c-c++-default-mode-for-headers 'c++-mode)
      (clojure :variables
+              clojure-docstring-fill-column 72
               cljr-favor-prefix-notation nil
               cider-inject-dependencies-at-jack-in nil
               cider-overlays-use-font-lock t
@@ -172,7 +173,8 @@ values."
      javascript
      markdown
      (org :variables
-          org-enable-github-support t)
+          org-enable-github-support t
+          org-startup-with-inline-images t)
      puppet
      python
      restclient
@@ -492,55 +494,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     '(defun enriched-decode-display-prop (start end &optional param)
        (list start end)))
 
-  (setq clojure-docstring-fill-column 72)
-
   (setq exec-path-from-shell-check-startup-files nil)
-
-  (setq org-startup-with-inline-images t)
-  (defun pbc--extract-ns-list (req-str)
-    (s-split "\\."
-             (car (s-split " " (cljr--extract-sexp-content req-str)))))
-
-  (defun pbc--shared-list-length (l1 l2)
-    (length
-     (-take-while 'identity
-                  (-zip-with 'equal l1 l2))))
-
-  (defun pbc-clj-ns-comparator (s1 s2)
-    "Sort clojure namespaces"
-    (let* ((ns1 (cljr--extract-sexp-content s1))
-           (ns2 (cljr--extract-sexp-content s2))
-           (nslist-1 (pbc--extract-ns-list s1))
-           (nslist-2 (pbc--extract-ns-list s2))
-           (current-ns-list (pbc--extract-ns-list (clojure-find-ns)))
-           (shared-length-s1 (pbc--shared-list-length nslist-1 current-ns-list))
-           (shared-length-s2 (pbc--shared-list-length nslist-2 current-ns-list)))
-      (cond ((and (s-starts-with? "clojure" ns1)
-                  (s-starts-with? "clojure" ns2))
-             (cljr--string-natural-comparator s1 s2))
-            ((s-starts-with? "clojure" ns1) t)
-            ((s-starts-with? "clojure" ns2) nil)
-            (t (if (/= shared-length-s1 shared-length-s2)
-                   (> shared-length-s2 shared-length-s1)
-                 (cljr--string-natural-comparator s1 s2))))))
-
-  (setq cljr-sort-comparator 'pbc-clj-ns-comparator)
-
-  ;; Move focus to new split
-  ;; (defadvice split-window (after move-point-to-new-window activate)
-  ;;   "Moves the point to the newly created window after splitting."
-  ;;   (other-window 1))
-
-  (advice-add #'magit-key-mode-popup-committing :after
-            (lambda ()
-              (magit-key-mode-toggle-option (quote committing) "--verbose")))
-
-  (setq mouse-yank-at-point t)
-
-  ;; (setq-default ruby-version-manager 'rbenv)
-
-  (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
-  (push '(ensime . "melpa-stable") package-pinned-packages)
   )
 
 (defun my-c-hook ()
@@ -612,6 +566,7 @@ you should place your code here."
   (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
 
   (setq x-select-enable-clipboard-manager nil)
+  (setq mouse-yank-at-point t)
 
   ;; default browser
   (setq-default browse-url-browser-function 'browse-url-generic
