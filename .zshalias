@@ -146,5 +146,5 @@ function delete_vmpooler_vm() {
 
 function install_pe() {
     echo "install_pe" > /tmp/pre_suite.rb
-    BEAKER_PE_DIR=http://enterprise.delivery.puppetlabs.net/${1:-2017.3}/ci-ready beaker -h ${2:-centos7-64mdcal} --keyfile ~/.ssh/id_rsa-acceptance --preserve-hosts --pre-suite /tmp/pre_suite.rb
+    BEAKER_PE_DIR=http://enterprise.delivery.puppetlabs.net/${1:-2018.1}/ci-ready beaker -h ${2:-centos7-64mdcal} --keyfile ~/.ssh/id_rsa-acceptance --preserve-hosts --pre-suite /tmp/pre_suite.rb
 }
