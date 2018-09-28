@@ -34,8 +34,6 @@ xfce4-power-manager &
 xfce4-volumed-pulse &
 xfce4-clipman &
 
-xscreensaver -no-splash &
-
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 xsetroot -cursor_name left_ptr
