@@ -111,6 +111,8 @@ function pcurl() {
 }
 
 alias be='bundle exec'
+alias bu='bundle update'
+alias bi='bundle install'
 
 function called() {
     if [ ! -n "$1" ]; then

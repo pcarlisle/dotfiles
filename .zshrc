@@ -1,3 +1,6 @@
+# Enable for profiling (and zprof line at end)
+# zmodload zsh/zprof
+
 # Path to oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -20,11 +23,36 @@ DISABLE_AUTO_UPDATE="true"
 # COMPLETION_WAITING_DOTS="true"
 
 # plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby python history-substring-search nyan zsh-syntax-highlighting safe-paste zsh-completions)
+# custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+plugins=(
+copydir
+copyfile
+cargo
+bundler
+docker
+emoji
+gitfast
+github
+lein
+jsontools
+httpie
+golang
+ruby
+rbenv
+history-substring-search
+zsh-syntax-highlighting
+safe-paste
+vagrant
+vault
+zsh-completions
+# zsh-autosuggestions
+zsh-navigation-tools
+zsh_reload
+)
 
 source $ZSH/oh-my-zsh.sh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
 # bind UP and DOWN arrow keys
 for keycode in '[' '0'; do
@@ -44,9 +72,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 # up and down arrows
 bindkey "${terminfo[kcuu1]}" history-substring-search-up      # start typing + [Up-Arrow] - fuzzy find history forward
 bindkey "${terminfo[kcud1]}" history-substring-search-down    # start typing + [Down-Arrow] - fuzzy find history backward
-
-path=(~/.rbenv/bin $path)
-eval "$(rbenv init -)"
 
 unsetopt correctall
 
@@ -101,6 +126,10 @@ export TERM=xterm-256color
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias git=hub
-
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/vault vault
+
+# Enable with line at beginning for profiling
+# zprof
