@@ -494,6 +494,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
     '(defun enriched-decode-display-prop (start end &optional param)
        (list start end)))
 
+  (setq solarized-scale-org-headlines nil)
+  (setq solarized-scale-outline-headlines nil)
+  (setq solarized-use-variable-pitch nil)
+
   (setq exec-path-from-shell-check-startup-files nil)
   )
 
@@ -553,8 +557,6 @@ you should place your code here."
 
   ;; cider
   (add-hook 'cider-connected-hook #'cider-refresh)
-
-  (setq solarized-scale-org-headlines nil)
 
   (setq x-select-enable-primary t)  ; emacs 24
   (setq select-enable-primary t)  ; emacs 25
