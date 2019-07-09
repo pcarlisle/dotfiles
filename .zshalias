@@ -170,3 +170,7 @@ function idchoppers() {
 function idspispopd() {
     echo -e '\e[1mNO CLIPPING MODE ON\e[0m'
 }
+
+function xyzzy() {
+    echo 'Nothing happens.'
+}
