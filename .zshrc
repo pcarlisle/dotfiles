@@ -28,7 +28,6 @@ plugins=(
 copydir
 copyfile
 cargo
-bundler
 docker
 emoji
 gitfast
