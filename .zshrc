@@ -28,7 +28,6 @@ plugins=(
 copydir
 copyfile
 cargo
-bundler
 docker
 emoji
 gitfast
@@ -37,6 +36,7 @@ lein
 jsontools
 httpie
 golang
+python
 ruby
 rbenv
 history-substring-search
@@ -80,6 +80,7 @@ source ~/.zshalias
 export WORKDIR='/home/patrick/work'
 # export FACTER_LOCATION="file://$WORKDIR/facter"
 # export PUPPET_LOCATION="file://$WORKDIR/puppet"
+export GEM_SOURCE='https://rubygems.org'
 
 # export RUBYLIB=''
 # Use local beaker
