@@ -16,40 +16,14 @@ autoload -Uz _zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-# zinit light-mode for \
-#       zinit-zsh/z-a-rust \
-#       zinit-zsh/z-a-as-monitor \
-#       zinit-zsh/z-a-patch-dl \
-#       zinit-zsh/z-a-bin-gem-node
+zinit light-mode for \
+      zinit-zsh/z-a-rust \
+      zinit-zsh/z-a-as-monitor \
+      zinit-zsh/z-a-patch-dl \
+      zinit-zsh/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
-
-# zinit snippet OMZ::themes/mrtazz.zsh-theme
-
-# Look in ~/.oh-my-zsh/themes/
-# ZSH_THEME="mrtazz"
-
-# plugins can be found in ~/.oh-my-zsh/plugins/*
-# custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# plugins=(
-# copydir
-# copyfile
-# gitfast
-# github
-# lein
-# jsontools
-# httpie
-# golang
-# python
-# ruby
-# rbenv
-# history-substring-search
-# safe-paste
-# vagrant
-# vault
-# zsh_reload
-# )
-
+#
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
 ## Theme
@@ -68,17 +42,12 @@ zinit wait'!' lucid for \
 
 ## Plugins
 
-zinit light zsh-users/zsh-history-substring-search
-# bind P and N for EMACS mode
-# bindkey -M emacs '^P' history-substring-search-up
-# bindkey -M emacs '^N' history-substring-search-down
+# todo try fzy
+zinit pack"bgn+keys" for fzf
+zinit light Aloxaf/fzf-tab
 
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-# up and down arrows
-bindkey "${terminfo[kcuu1]}" history-substring-search-up
-bindkey "${terminfo[kcud1]}" history-substring-search-down
+zinit ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down'
+zinit light zsh-users/zsh-history-substring-search
 
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
@@ -147,10 +116,73 @@ setopt pushdminus
 
 unsetopt correctall
 
+## Key bindings
+# Initially copied from omz/lib/key-bindings.zsh
+
+# Make sure that the terminal is in application mode when zle is active, since
+# only then values from $terminfo are valid
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+  function zle-line-init() {
+    echoti smkx
+  }
+  function zle-line-finish() {
+    echoti rmkx
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+fi
+
+bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
+bindkey -s '\el' 'ls\n'                               # [Esc-l] - run command: ls
+if [[ "${terminfo[kpp]}" != "" ]]; then
+  bindkey "${terminfo[kpp]}" up-line-or-history       # [PageUp] - Up a line of history
+fi
+if [[ "${terminfo[knp]}" != "" ]]; then
+  bindkey "${terminfo[knp]}" down-line-or-history     # [PageDown] - Down a line of history
+fi
+
+if [[ "${terminfo[khome]}" != "" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
+fi
+if [[ "${terminfo[kend]}" != "" ]]; then
+  bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
+fi
+
+bindkey ' ' magic-space                               # [Space] - do history expansion
+
+bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move forward one word
+bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move backward one word
+
+if [[ "${terminfo[kcbt]}" != "" ]]; then
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
+fi
+
+bindkey '^?' backward-delete-char                     # [Backspace] - delete backward
+if [[ "${terminfo[kdch1]}" != "" ]]; then
+  bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
+else
+  bindkey "^[[3~" delete-char
+  bindkey "^[3;5~" delete-char
+  bindkey "\e[3~" delete-char
+fi
+
+# Edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
+
+# file rename magick
+bindkey "^[m" copy-prev-shell-word
+
+
+## Aliases
+
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
 source ~/.zshalias
+
+## Environment
 
 export WORKDIR='/home/patrick/work'
 # export FACTER_LOCATION="file://$WORKDIR/facter"
@@ -197,15 +229,10 @@ export VAGRANT_INSTALLER_ENV=1
 
 export TERM=xterm-256color
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /usr/bin/vault vault
-
-
-# eval "$(rbenv init -)"
 
 # Enable with line at beginning for profiling
 # zprof
