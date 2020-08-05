@@ -23,30 +23,32 @@ zinit light-mode for \
       zinit-zsh/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
-#
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 ## Theme
-autoload colors
-colors
-setopt promptsubst
-zinit wait lucid for \
-        OMZL::git.zsh \
-        OMZL::spectrum.zsh \
-  atload"unalias grv" \
-        OMZP::git
-PS1="READY >" # provide a simple prompt till the theme loads
-zinit wait'!' lucid for \
-    OMZL::prompt_info_functions.zsh \
-    OMZT::mrtazz
+
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
 
 ## Plugins
+zinit ice wait lucid for \
+      OMZL::git.zsh \
+    ice atload"unalias grv; unalias glo" \
+      zinit snippet OMZP::git
 
 # todo try fzy
+zinit ice wait lucid
 zinit pack"bgn+keys" for fzf
+zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
 
-zinit ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down'
+zinit ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down; bindkey "${terminfo[kcuu1]}" history-substring-search-up; bindkey "${terminfo[kcud1]}" history-substring-search-down'
 zinit light zsh-users/zsh-history-substring-search
 
 zinit wait lucid for \
@@ -54,6 +56,13 @@ zinit wait lucid for \
     zdharma/fast-syntax-highlighting \
  blockf \
     zsh-users/zsh-completions
+
+zinit ice wait lucid
+zinit light wfxr/forgit
+
+path=($HOME/.rbenv/bin(N-/) $path) 
+zinit ice wait lucid
+zinit light htlsne/zinit-rbenv
 
 # Taken from omz completion.zsh, so far unedited
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
@@ -76,8 +85,9 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
-zinit ice wait lucid
-zinit light htlsne/zinit-rbenv
+# Set up nice ls colors - This part is from my own old zshrc
+eval "$(dircolors .dircolors)"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ## History
 
@@ -89,6 +99,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 ## Shell options
+# So far this is almost entirely copied out of OMZ to preserve what I'm used to
 
 setopt append_history
 setopt extended_history
@@ -180,15 +191,18 @@ bindkey "^[m" copy-prev-shell-word
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
+alias git=hub
 source ~/.zshalias
 
 ## Environment
+# TODO: Organize this
 
-export WORKDIR='/home/patrick/work'
+export GEM_SOURCE='https://rubygems.org'
+export WORKDIR='/home/patrick/work'  # I don't remember what uses this
+
+# TODO: I use these intermittently, would make more sense to manage with scripts
 # export FACTER_LOCATION="file://$WORKDIR/facter"
 # export PUPPET_LOCATION="file://$WORKDIR/puppet"
-export GEM_SOURCE='https://rubygems.org'
-
 # export RUBYLIB=''
 # Use local beaker
 # export RUBYLIB=${WORKDIR}/beaker/lib:${RUBYLIB}
@@ -199,14 +213,10 @@ export RUST_SRC_PATH="${HOME}/src/rust/src"
 export JAVA_HOME=/usr/lib/jvm/default
 export FLAMEGRAPH_DIR="${HOME}/work/FlameGraph"
 
-# Set up nice ls colors
-eval "$(dircolors .dircolors)"
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
 PAGER=less;  	export PAGER
 
 # Less options:
-# -i : smart case in searches
+# -
 # -M : long prompt (???)
 # -S : don't wrap long lines
 # -x4 : Display tab characters as 4 spaces
@@ -231,8 +241,10 @@ export TERM=xterm-256color
 
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
-# autoload -U +X bashcompinit && bashcompinit
-# complete -o nospace -C /usr/bin/vault vault
+export FORGIT_FZF_DEFAULT_OPTS="--exact"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Enable with line at beginning for profiling
 # zprof
