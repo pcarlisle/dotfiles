@@ -145,6 +145,32 @@ function delete_vmpooler_vm() {
 }
 
 function install_pe() {
-    echo "install_pe" > /tmp/pre_suite.rb
-    BEAKER_PE_DIR=http://enterprise.delivery.puppetlabs.net/${1:-2018.1}/ci-ready beaker -h ${2:-centos7-64mdcal} --keyfile ~/.ssh/id_rsa-acceptance --preserve-hosts --pre-suite /tmp/pre_suite.rb
+    echo "require 'beaker'; require 'beaker-pe'; install_pe" > /tmp/pre_suite.rb
+    BEAKER_PE_DIR=http://enterprise.delivery.puppetlabs.net/${1:-2019.1}/ci-ready beaker -h ${2:-centos7-64mdcal} --keyfile ~/.ssh/id_rsa-acceptance --preserve-hosts --pre-suite /tmp/pre_suite.rb
+}
+
+### CHEAT CODES ###
+
+function iddqd() {
+    echo -e '\e[1mDEGREELESSNESS MODE ON\e[0m'
+}
+
+function idfa() {
+    echo -e '\e[1mAMMO (NO KEYS) ADDED\e[0m'
+}
+
+function idkfa() {
+    echo -e '\e[1mVERY HAPPY AMMO ADDED\e[0m'
+}
+
+function idchoppers() {
+    echo -e "\e[1m... DOESN'T SUCK - GM\e[0m"
+}
+
+function idspispopd() {
+    echo -e '\e[1mNO CLIPPING MODE ON\e[0m'
+}
+
+function xyzzy() {
+    echo 'Nothing happens.'
 }
