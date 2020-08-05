@@ -191,6 +191,7 @@ bindkey "^[m" copy-prev-shell-word
 
 ## Aliases
 
+alias ls='ls --color=tty'
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
