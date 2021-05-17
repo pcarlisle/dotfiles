@@ -42,5 +42,6 @@ dot_install_gnu .zprofile
 dot_install_gnu .zshalias
 dot_install_gnu .zshenv
 dot_install_gnu .zshrc
+dot_install_gnu .doom.d
 
 # TODO: Install spacemacs
