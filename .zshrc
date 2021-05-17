@@ -20,7 +20,8 @@ zinit light-mode for \
       zinit-zsh/z-a-rust \
       zinit-zsh/z-a-as-monitor \
       zinit-zsh/z-a-patch-dl \
-      zinit-zsh/z-a-bin-gem-node
+      zinit-zsh/z-a-bin-gem-node \
+      zinit-zsh/z-a-meta-plugins
 
 ### End of Zinit's installer chunk
 
@@ -40,10 +41,9 @@ zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
 ## Plugins
-zinit ice wait lucid for \
-      OMZL::git.zsh \
-    ice atload"unalias grv; unalias glo" \
-      zinit snippet OMZP::git
+zinit snippet OMZL::git.zsh
+zinit ice atload"unalias grv; unalias glo"
+zinit snippet OMZP::git
 
 # todo try fzy
 zinit ice wait lucid
@@ -67,6 +67,13 @@ path=($HOME/.rbenv/bin(N-/) $path)
 zinit ice wait lucid
 zinit light htlsne/zinit-rbenv
 
+## Programs
+
+# TODO: vivid install is broken needs to move share/vivid to ~/.config/vivid or $XDG_CONFIG_HOME/vivid
+# TODO: figure out whether i want these here anyway or in package management, or possibly how to handle that apropriate across systems
+zinit skip'dircolors-material vivid' for console-tools # sharkdp meta package includes fd, bat, hexyl, hyperfine, vivid
+
+## Completion style
 # Taken from omz completion.zsh, so far unedited
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
@@ -192,10 +199,11 @@ bindkey "^[m" copy-prev-shell-word
 ## Aliases
 
 alias ls='ls --color=tty'
-alias l='ls -lah'
+alias l='exa -lah --git --time-style=long-iso'
 alias ll='ls -lh'
 alias la='ls -lAh'
 alias git=hub
+alias cat='bat --style=plain'
 source ~/.zshalias
 
 ## Environment
@@ -247,8 +255,11 @@ export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 export FORGIT_FZF_DEFAULT_OPTS="--exact"
 
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Enable with line at beginning for profiling
 # zprof
+
