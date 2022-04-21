@@ -3,9 +3,9 @@
 BASEDIR="$(cd "$(dirname "$0")" && pwd)"
 echo "$BASEDIR"
 
-if $(ln --version 2>&1 | grep -q coreutils); then
+if ln --version 2>&1 | grep -q coreutils; then
     LN=ln
-elif $(gln --version 2>&1 | grep -q coreutils); then
+elif gln --version 2>&1 | grep -q coreutils; then
     LN=gln
 else
     echo "No gnu implementation of ln found."
@@ -43,5 +43,6 @@ dot_install_gnu .zshalias
 dot_install_gnu .zshenv
 dot_install_gnu .zshrc
 dot_install_gnu .doom.d
+dot_install_gnu .p10k.zsh
 
 # TODO: Install spacemacs
