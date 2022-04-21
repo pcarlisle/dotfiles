@@ -1,29 +1,32 @@
 # Enable for profiling (and zprof line at end)
 # zmodload zsh/zprof
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
+    command mkdir -p "$HOME/.zi" && command chmod g-rwX "$HOME/.zi"
+    command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-            print -P "%F{160}▓▒░ The clone has failed.%f%b"
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+# This makes sure polaris/bin is set in the path on the first run
+mkdir -p "$HOME/.zi/polaris/bin"
+
+source "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
 # Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-      zinit-zsh/z-a-rust \
-      zinit-zsh/z-a-as-monitor \
-      zinit-zsh/z-a-patch-dl \
-      zinit-zsh/z-a-bin-gem-node \
-      zinit-zsh/z-a-meta-plugins
+zi light z-shell/z-a-meta-plugins
+zi light-mode for @annexes+add @romkatv
 
-### End of Zinit's installer chunk
+if [[ -z ${SHELL} ]]; then
+  export SHELL=/bin/zsh
+fi
+
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] && [[ $TERM == "xterm-kitty" ]]; then
+  export TERM=xterm-256color
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -35,43 +38,35 @@ fi
 # Set emacs key bindings early so plugins can override defaults
 bindkey -e
 
-## Theme
-
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
-
 ## Plugins
-zinit snippet OMZL::git.zsh
-zinit ice atload"unalias grv; unalias glo"
-zinit snippet OMZP::git
+zi snippet OMZL::git.zsh
+zi ice atload"unalias grv; unalias glo"
+zi snippet OMZP::git
 
-# todo try fzy
-zinit ice wait lucid
-zinit pack"bgn+keys" for fzf
-zinit ice wait lucid
-zinit light Aloxaf/fzf-tab
+zi ice wait lucid
+zi pack"bgn-binary+keys" for fzf
 
-zinit ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down; bindkey "${terminfo[kcuu1]}" history-substring-search-up; bindkey "${terminfo[kcud1]}" history-substring-search-down'
-zinit light zsh-users/zsh-history-substring-search
+zi ice wait lucid
+zi light Aloxaf/fzf-tab
 
-zinit wait lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions
+zi ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down; bindkey "${terminfo[kcuu1]}" history-substring-search-up; bindkey "${terminfo[kcud1]}" history-substring-search-down'
+zi light zsh-users/zsh-history-substring-search
 
-zinit ice wait lucid
-zinit light wfxr/forgit
+# zi wait lucid for \
+#  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+#     zdharma/fast-syntax-highlighting \
+#  blockf \
+#     zsh-users/zsh-completions
+
+zi wait lucid atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" light-mode for \
+  zsh-users/zsh-completions
+
+zi ice wait lucid
+zi light wfxr/forgit
 
 path=($HOME/.rbenv/bin(N-/) $path) 
-zinit ice wait lucid
-zinit light htlsne/zinit-rbenv
-
-## Programs
-
-# TODO: vivid install is broken needs to move share/vivid to ~/.config/vivid or $XDG_CONFIG_HOME/vivid
-# TODO: figure out whether i want these here anyway or in package management, or possibly how to handle that apropriate across systems
-zinit skip'dircolors-material vivid' for console-tools # sharkdp meta package includes fd, bat, hexyl, hyperfine, vivid
+zi ice wait lucid
+zi light htlsne/zinit-rbenv
 
 ## Completion style
 # Taken from omz completion.zsh, so far unedited
@@ -96,7 +91,12 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 zstyle '*' single-ignored show
 
 # Set up nice ls colors - This part is from my own old zshrc
-eval "$(dircolors .dircolors)"
+if [[ $(uname -s) == "Darwin" ]]; then
+  eval "$(gdircolors)"
+else
+  eval "$(dircolors)"
+fi
+
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ## History
@@ -192,18 +192,29 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
-# file rename magick
+# file rename magic
 bindkey "^[m" copy-prev-shell-word
-
 
 ## Aliases
 
-alias ls='ls --color=tty'
-alias l='exa -lah --git --time-style=long-iso'
-alias ll='ls -lh'
-alias la='ls -lAh'
-alias git=hub
-alias cat='bat --style=plain'
+if [[ $(uname -s) == "Darwin" ]] && which gls >/dev/null; then
+  alias ls='gls --color=tty --hyperlink=auto'
+else
+  alias ls='ls --color=tty --hyperlink=auto'
+fi
+
+if which exa > /dev/null; then
+  alias l='exa -lah --git --time-style=long-iso'
+fi
+
+if which hub > /dev/null; then
+  alias git=hub
+fi
+
+if which bat > /dev/null; then
+  alias cat='bat --style=plain'
+fi
+
 source ~/.zshalias
 
 ## Environment
@@ -212,20 +223,12 @@ source ~/.zshalias
 export GEM_SOURCE='https://rubygems.org'
 export WORKDIR='/home/patrick/work'  # I don't remember what uses this
 
-# TODO: I use these intermittently, would make more sense to manage with scripts
-# export FACTER_LOCATION="file://$WORKDIR/facter"
-# export PUPPET_LOCATION="file://$WORKDIR/puppet"
-# export RUBYLIB=''
-# Use local beaker
-# export RUBYLIB=${WORKDIR}/beaker/lib:${RUBYLIB}
-# export PATH=${PATH}:${WORKDIR}/beaker/bin
-
 export RUST_SRC_PATH="${HOME}/src/rust/src"
 
 export JAVA_HOME=/usr/lib/jvm/default
 export FLAMEGRAPH_DIR="${HOME}/work/FlameGraph"
 
-PAGER=less;  	export PAGER
+export PAGER=less
 
 # Less options:
 # -
@@ -245,21 +248,25 @@ unset RUBYOPT
 export BLOCKSIZE=K
 export EDITOR=vim
 
-# source $ZSH/lib/edit-command-line.zsh
-
-export VAGRANT_INSTALLER_ENV=1
-
-export TERM=xterm-256color
-
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 export FORGIT_FZF_DEFAULT_OPTS="--exact"
 
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 
+if [[ -e "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
+  export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+fi
+
+export RANTLY_VERBOSE=0
+
+export GOPROXY=https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct
+export GONOSUMDB='github.com/github/*'
+export GONOPROXY=
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Enable with line at beginning for profiling
 # zprof
-
+# XXX Don't add anything below this XXX
