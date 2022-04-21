@@ -47,12 +47,7 @@ dot_install_gnu .p10k.zsh
 
 
 if [[ -n "$CODESPACES" ]]; then
-    if [ -z "${USER}" ]; then
-        USER=codespace
-    fi
-
-    if ! grep -q "${USER}.*/bin/zsh" /etc/passwd
-    then
-        sudo chsh -s /bin/zsh ${USER}
+    if ! grep -q "$(whoami).*/bin/zsh" /etc/passwd; then
+        sudo chsh -s /bin/zsh $(whoami)
     fi
 fi
