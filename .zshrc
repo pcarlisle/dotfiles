@@ -1,6 +1,14 @@
 # Enable for profiling (and zprof line at end)
 # zmodload zsh/zprof
 
+if [[ -z ${SHELL} ]]; then
+  export SHELL=/bin/zsh
+fi
+
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] && [[ $TERM == "xterm-kitty" ]]; then
+  export TERM=xterm-256color
+fi
+
 ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-${HOME}}/.zinit}}"
 ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-${ZPLG_BIN_DIR_NAME}}:-bin}"
 ### Added by Zinit's installer
@@ -25,14 +33,6 @@ zi light zdharma-continuum/zinit-annex-patch-dl
 # Load a few important annexes, without Turbo
 # zi light z-shell/z-a-meta-plugins
 # zi light-mode for @annexes @romkatv
-
-if [[ -z ${SHELL} ]]; then
-  export SHELL=/bin/zsh
-fi
-
-if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] && [[ $TERM == "xterm-kitty" ]]; then
-  export TERM=xterm-256color
-fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
