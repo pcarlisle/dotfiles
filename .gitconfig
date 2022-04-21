@@ -1,9 +1,13 @@
 [user]
-    name = Patrick Carlisle
-    email = patrick@puppetlabs.com
+	name = Patrick Carlisle
+	email = pcarlisle@github.com
 [core]
     excludesfile = /home/patrick/.gitignore
     whitespace = trailing-space,space-before-tab
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
 
 [color]
     ui = auto
@@ -12,7 +16,7 @@
     review = log -p --reverse -M -C -C --patience --no-prefix
     review-topic = !sh -c 'git review ${1}^1..${1}^2' -
     view-topic = !sh -c 'git log --reverse ${1}^1..${1}^2' -
-    lg = "log --pretty=format:'%C(yellow)%h%C(reset) %s %C(cyan)%cr%C(reset) %C(blue)%an%C(reset) %C(green)%d%C(reset)' --graph --date-order"
+    lg = "log --pretty=format:'%C(yellow)%h%C(reset) %s %C(cyan)%cd%C(reset) %C(blue)%an%C(reset) %C(green)%d%C(reset)' --graph --date-order"
     ff = "pull --ff-only --ff"
     ra = "!f() { git remote add $1 git@github.com:$1/$(basename $(git config --local remote.origin.url)); git remote -v;}; f"
     raf = "!f() { git remote add $1 git@github.com:$1/$(basename $(git config --local remote.origin.url)); git fetch $1;}; f"
@@ -33,7 +37,28 @@
     insteadOf = puppetlabs:
 [url "git@github.com:pcarlisle/"]
     insteadOf = pcarlisle:
+[url "git@github.com:github/"]
+    insteadOf = github:
 [include]
 	  path = ~/.gitconfig.local
 [magit]
 	hideCampaign = true
+[push]
+	default = simple
+[delta]
+    navigate = true
+[diff]
+    colorMoved = default
+[github]
+	user = pcarlisle
+[credential]
+	helper = osxkeychain
+[hub]
+	protocol = ssh
+; [url "git@github.com:"]
+; 	insteadOf = https://github.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
