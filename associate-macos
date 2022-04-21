@@ -21,3 +21,5 @@ duti -s org.gnu.Emacs public.swift-source all
 duti -s org.gnu.Emacs public.unix-executable all
 duti -s org.gnu.Emacs public.xml all
 duti -s org.gnu.Emacs public.yaml all
+duti -s org.gnu.Emacs .go all
+duti -s org.gnu.Emacs .sql all
