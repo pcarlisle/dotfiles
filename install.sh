@@ -50,4 +50,6 @@ if [[ -n "$CODESPACES" ]]; then
     if ! grep -q "$(whoami).*/bin/zsh" /etc/passwd; then
         sudo chsh -s /bin/zsh $(whoami)
     fi
+
+    zsh -ils -c -- '@zinit-scheduler burst'
 fi
