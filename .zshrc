@@ -1,24 +1,30 @@
 # Enable for profiling (and zprof line at end)
 # zmodload zsh/zprof
 
-if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
-    command mkdir -p "$HOME/.zi" && command chmod g-rwX "$HOME/.zi"
-    command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-${HOME}}/.zinit}}"
+ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-${ZPLG_BIN_DIR_NAME}}:-bin}"
+### Added by Zinit's installer
+if [[ ! -f "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh" ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
+    command mkdir -p "${ZINIT_HOME}" && command chmod g-rwX "${ZINIT_HOME}"
+    command git clone https://github.com/zdharma-continuum/zinit "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f"
 fi
 
 # This makes sure polaris/bin is set in the path on the first run
-mkdir -p "$HOME/.zi/polaris/bin"
+mkdir -p "$HOME/.zinit/polaris/bin"
 
-source "$HOME/.zi/bin/zi.zsh"
-autoload -Uz _zi
-(( ${+_comps} )) && _comps[zi]=_zi
+source "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit installer's chunk
 
+zi light zdharma-continuum/zinit-annex-bin-gem-node
+zi light zdharma-continuum/zinit-annex-patch-dl
 # Load a few important annexes, without Turbo
-zi light z-shell/z-a-meta-plugins
-zi light-mode for @annexes+add @romkatv
+# zi light z-shell/z-a-meta-plugins
+# zi light-mode for @annexes @romkatv
 
 if [[ -z ${SHELL} ]]; then
   export SHELL=/bin/zsh
@@ -39,6 +45,41 @@ fi
 bindkey -e
 
 ## Plugins
+
+zi ice depth=1
+zi light romkatv/powerlevel10k
+
+zi for \
+    from'gh-r' \
+    sbin'jq* -> jq' \
+  stedolan/jq
+
+zi wait lucid for \
+    atclone'cp -vf completions/exa.zsh _exa'  \
+    from'gh-r' \
+    sbin'**/exa -> exa' \
+  ogham/exa
+
+zi wait lucid for \
+    from'gh-r'  \
+    sbin'**/fd -> fd' \
+  @sharkdp/fd
+
+zi wait lucid for \
+    from'gh-r' \
+    sbin'**/delta -> delta' \
+  dandavison/delta
+
+zi wait lucid for \
+    from'gh-r' \
+    sbin'**/bat -> bat' \
+  @sharkdp/bat
+
+zi wait lucid for \
+    from'gh-r' \
+    sbin'**/rg -> rg' \
+  BurntSushi/ripgrep
+
 zi snippet OMZL::git.zsh
 zi ice atload"unalias grv; unalias glo"
 zi snippet OMZP::git
@@ -58,15 +99,17 @@ zi light zsh-users/zsh-history-substring-search
 #  blockf \
 #     zsh-users/zsh-completions
 
-zi wait lucid atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" light-mode for \
+zi wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" light-mode for \
   zsh-users/zsh-completions
 
 zi ice wait lucid
 zi light wfxr/forgit
 
 path=($HOME/.rbenv/bin(N-/) $path) 
-zi ice wait lucid
-zi light htlsne/zinit-rbenv
+if which rbenv > /dev/null; then
+  zi ice wait lucid
+  zi light htlsne/zinit-rbenv
+fi
 
 ## Completion style
 # Taken from omz completion.zsh, so far unedited
