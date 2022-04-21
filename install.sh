@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 BASEDIR="$(cd "$(dirname "$0")" && pwd)"
 echo "$BASEDIR"
@@ -45,4 +45,14 @@ dot_install_gnu .zshrc
 dot_install_gnu .doom.d
 dot_install_gnu .p10k.zsh
 
-# TODO: Install spacemacs
+
+if [[ -n "$CODESPACES" ]]; then
+    if [ -z "${USER}" ]; then
+        USER=codespace
+    fi
+
+    if ! grep -q "${USER}.*/bin/zsh" /etc/passwd
+    then
+        sudo chsh -s /bin/zsh ${USER}
+    fi
+fi
