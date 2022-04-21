@@ -52,3 +52,4 @@
 (package! evil-lisp-state)
 (package! evil-cleverparens)
 (package! lsp-treemacs)
+(package! protobuf-mode)

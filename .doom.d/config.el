@@ -19,8 +19,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Consolas" :size 20 :weight 'normal)
-      doom-variable-pitch-font (font-spec :family "sans" :size 20))
+(setq doom-font (font-spec :family "Source Code Pro" :size 17 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "open sans" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -67,6 +67,19 @@
 ;;   (define-key lispy-mode-map-lispy "[" nil)
 ;;   (define-key lispy-mode-map-lispy "]" nil))
 
+(setq doom-scratch-dir "~/.scratch")
+(setq doom-scratch-initial-major-mode 'org-mode)
+
+(setq +format-on-save-enabled-modes '(go-mode))
+
+(setq lsp-go-codelenses
+      '((gc_details . t)
+        (generate . t)
+        (regenerate_cgo . t)
+        (tidy . t)
+        (upgrade_dependency . t)
+        (test . t)
+        (vendor . t)))
 
 (after! smartparens
   ;; (add-hook! clojure-mode #'smartparens-strict-mode)
@@ -98,3 +111,22 @@
   :custom
   (evil-lisp-state-global t)
   :config (evil-lisp-state-leader "SPC k"))
+
+
+;; Fix running other checkers after lsp
+;; fix from https://github.com/hlissner/doom-emacs/issues/1530
+;; flycheck issue https://github.com/flycheck/flycheck/issues/1762
+(add-hook! 'lsp-after-initialize-hook
+  (run-hooks (intern (format "%s-lsp-hook" major-mode))))
+
+(defun go-flycheck-setup ()
+  (flycheck-add-next-checker 'lsp 'golangci-lint))
+
+(defun sh-flycheck-setup ()
+  (flycheck-add-next-checker 'lsp 'sh-shellcheck))
+
+(add-hook 'go-mode-lsp-hook
+          #'go-flycheck-setup)
+
+(add-hook 'sh-mode-lsp-hook
+          #'sh-flycheck-setup)
