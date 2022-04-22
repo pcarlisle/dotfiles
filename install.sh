@@ -44,6 +44,7 @@ dot_install_gnu .zshenv
 dot_install_gnu .zshrc
 dot_install_gnu .doom.d
 dot_install_gnu .p10k.zsh
+dot_install_gnu .pryrc
 
 
 if [[ -n "$CODESPACES" ]]; then
