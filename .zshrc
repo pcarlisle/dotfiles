@@ -49,10 +49,10 @@ bindkey -e
 zi ice depth=1
 zi light romkatv/powerlevel10k
 
-zi for \
-    from'gh-r' \
-    sbin'jq* -> jq' \
-  stedolan/jq
+# zi for \
+#     from'gh-r' \
+#     sbin'jq* -> jq' \
+#   stedolan/jq
 
 zi wait lucid for \
     atclone'cp -vf completions/exa.zsh _exa'  \
@@ -65,15 +65,15 @@ zi wait lucid for \
     sbin'**/fd -> fd' \
   @sharkdp/fd
 
-zi wait lucid for \
-    from'gh-r' \
-    sbin'**/delta -> delta' \
-  dandavison/delta
+# zi wait lucid for \
+#     from'gh-r' \
+#     sbin'**/delta -> delta' \
+#   dandavison/delta
 
-zi wait lucid for \
-    from'gh-r' \
-    sbin'**/bat -> bat' \
-  @sharkdp/bat
+# zi wait lucid for \
+#     from'gh-r' \
+#     sbin'**/bat -> bat' \
+#   @sharkdp/bat
 
 zi wait lucid for \
     from'gh-r' \
