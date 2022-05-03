@@ -130,3 +130,5 @@
 
 (add-hook 'sh-mode-lsp-hook
           #'sh-flycheck-setup)
+
+(setq lsp-go-env '((GOFLAGS . "-tags=integration")))
