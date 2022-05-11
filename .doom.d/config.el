@@ -132,3 +132,8 @@
           #'sh-flycheck-setup)
 
 (setq lsp-go-env '((GOFLAGS . "-tags=integration")))
+
+(setq ns-command-modifier 'meta)
+;; Somehow this is being interpreted backwards so set left alt to super and right alt to inputting weird characters
+(setq ns-right-alternate-modifier 'super)
+(setq ns-alternate-modifier 'none)
