@@ -52,8 +52,6 @@ if [[ -n "$CODESPACES" ]]; then
         sudo chsh -s /bin/zsh $(whoami)
     fi
 
-    sudo apt-get install -qq file
-
     export TERM=xterm
     zsh -ils -c -- '@zinit-scheduler burst'
 fi
