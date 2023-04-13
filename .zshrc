@@ -268,7 +268,6 @@ export WORKDIR='/home/patrick/work'  # I don't remember what uses this
 
 export RUST_SRC_PATH="${HOME}/src/rust/src"
 
-export JAVA_HOME=/usr/lib/jvm/default
 export FLAMEGRAPH_DIR="${HOME}/work/FlameGraph"
 
 export PAGER=less

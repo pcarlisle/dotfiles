@@ -1,6 +1,7 @@
 [user]
 	name = Patrick Carlisle
 	email = pcarlisle@github.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOqgbGyG27Uod7CuoYioIb2D23Hh9V2+hzRjLzOUAMSR
 [core]
     excludesfile = /home/patrick/.gitignore
     whitespace = trailing-space,space-before-tab
@@ -51,10 +52,10 @@
     colorMoved = default
 [github]
 	user = pcarlisle
-[credential]
-	helper = osxkeychain
-[hub]
-	protocol = ssh
+; [credential]
+; 	helper = osxkeychain
+; [hub]
+	; protocol = ssh
 ; [url "git@github.com:"]
 ; 	insteadOf = https://github.com/
 [filter "lfs"]
@@ -62,3 +63,13 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential "https://github.com"]
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/usr/local/bin/gh auth git-credential
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true

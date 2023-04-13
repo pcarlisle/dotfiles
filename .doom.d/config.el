@@ -59,6 +59,11 @@
 (setq which-key-idle-delay 0.25)
 
 (setq flycheck-ruby-rubocop-executable "~/.rbenv/shims/rubocop")
+(add-hook 'ruby-mode-hook
+  (lambda ()
+    (setq-local flycheck-command-wrapper-function
+                (lambda (command) (append '("bundle" "exec") command)))))
+
 
 ;; Seems to fix hanging at quit
 (setq x-select-enable-clipboard-manager nil)
