@@ -54,21 +54,21 @@ zi for \
     sbin'jq* -> jq' \
   stedolan/jq
 
-zi wait lucid for \
-    atclone'cp -vf completions/exa.zsh _exa'  \
-    from'gh-r' \
-    sbin'**/exa -> exa' \
-  ogham/exa
+# zi wait lucid for \
+#     atclone'cp -vf completions/exa.zsh _exa'  \
+#     from'gh-r' \
+#     sbin'**/exa -> exa' \
+#   ogham/exa
 
 zi wait lucid for \
     from'gh-r'  \
     sbin'**/fd -> fd' \
   @sharkdp/fd
 
-zi wait lucid for \
-    from'gh-r' \
-    sbin'**/delta -> delta' \
-  dandavison/delta
+# zi wait lucid for \
+#     from'gh-r'  \
+#     sbin'**/delta -> delta' \
+#   dandavison/delta
 
 zi wait lucid for \
     from'gh-r' \

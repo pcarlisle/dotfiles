@@ -48,10 +48,12 @@ dot_install_gnu .pryrc
 
 
 if [[ -n "$CODESPACES" ]]; then
+    git config --global --unset core.pager
+
     if ! grep -q "$(whoami).*/bin/zsh" /etc/passwd; then
         sudo chsh -s /bin/zsh $(whoami)
     fi
 
     export TERM=xterm
-    zsh -ils -c -- '@zinit-scheduler burst'
+    # zsh -ils -c -- '@zinit-scheduler burst'
 fi
