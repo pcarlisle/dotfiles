@@ -142,3 +142,6 @@
 ;; Somehow this is being interpreted backwards so set left alt to super and right alt to inputting weird characters
 (setq ns-right-alternate-modifier 'super)
 (setq ns-alternate-modifier 'none)
+
+(after! company
+  (setq company-idle-delay nil))
