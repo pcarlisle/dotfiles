@@ -271,7 +271,7 @@ export PAGER=less
 # -R : Pass through color control codes (allows display of colors)
 # -X : Don't init/deinit terminal (leave display on screen on exit)
 # -F : automatically exit if display fits entirely on one screen
-export LESS="-iMSRXF -x4" 
+export LESS="-iMSRXF -x4"
 
 export GDK_USE_XFT=1
 export QT_XFT=true
