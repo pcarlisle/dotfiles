@@ -292,6 +292,7 @@ if [[ -e "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
 fi
 
 export RANTLY_VERBOSE=0
+export TREE_SITTER_PARSER_DIR="$HOME/work/dependency-graph-api/parsers"
 
 export GOPROXY=https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct
 export GONOSUMDB='github.com/github/*'
