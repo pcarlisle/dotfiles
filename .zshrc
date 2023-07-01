@@ -49,10 +49,11 @@ bindkey -e
 zi ice depth=1
 zi light romkatv/powerlevel10k
 
-zi for \
-    from'gh-r' \
-    sbin'jq* -> jq' \
-  stedolan/jq
+zi wait lucid from"gh-r" for \
+    sbin'**/bat -> bat' @sharkdp/bat \
+    sbin'**/fd -> fd' @sharkdp/fd \
+    sbin'**/rg -> rg' BurntSushi/ripgrep \
+    sbin'jq* -> jq' jqlang/jq
 
 # zi wait lucid for \
 #     atclone'cp -vf completions/exa.zsh _exa'  \
@@ -60,25 +61,11 @@ zi for \
 #     sbin'**/exa -> exa' \
 #   ogham/exa
 
-zi wait lucid for \
-    from'gh-r'  \
-    sbin'**/fd -> fd' \
-  @sharkdp/fd
 
 # zi wait lucid for \
 #     from'gh-r'  \
 #     sbin'**/delta -> delta' \
 #   dandavison/delta
-
-zi wait lucid for \
-    from'gh-r' \
-    sbin'**/bat -> bat' \
-  @sharkdp/bat
-
-zi wait lucid for \
-    from'gh-r' \
-    sbin'**/rg -> rg' \
-  BurntSushi/ripgrep
 
 zi snippet OMZL::git.zsh
 zi ice atload"unalias grv; unalias glo"
@@ -99,8 +86,12 @@ zi light zsh-users/zsh-history-substring-search
 #  blockf \
 #     zsh-users/zsh-completions
 
-zi wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" light-mode for \
+zi wait lucid atinit"zicompinit; zicdreplay" blockf light-mode for \
   zsh-users/zsh-completions
+
+zi lucid has"docker" for \
+  as"completion" is-snippet \
+  https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
 zi ice wait lucid
 zi light wfxr/forgit
