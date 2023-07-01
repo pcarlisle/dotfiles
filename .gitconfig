@@ -46,6 +46,7 @@
 	hideCampaign = true
 [push]
 	default = simple
+	autoSetupRemote = true
 [delta]
     navigate = true
 [diff]
