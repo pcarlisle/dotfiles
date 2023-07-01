@@ -2,6 +2,13 @@ alias be='bundle exec'
 alias bu='bundle update'
 alias bi='bundle install'
 
+function fix_upstream() {
+    branch=$(git branch --show-current)
+    if [[ -n branch ]]; then
+       git branch --set-upstream-to=origin/"$branch" "$branch"
+    fi
+}
+
 ### CHEAT CODES ###
 
 function iddqd() {
