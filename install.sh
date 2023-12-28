@@ -14,8 +14,8 @@ fi
 # For use with gnu coreutils
 dot_install_gnu() {
     local target="${BASEDIR}/$1"
-    local link="${HOME}/$1"
-    if [ "$(realpath ${link})" != "${target}" ]; then
+    local link="${HOME}/${2:-$1}"
+    if [ "$(realpath ${link} 2>/dev/null)" != "${target}" ]; then
         "$LN" --backup=numbered -sv "${target}" "${link}"
     fi
 }
@@ -46,6 +46,7 @@ dot_install_gnu .zlogin
 dot_install_gnu .doom.d
 dot_install_gnu .p10k.zsh
 dot_install_gnu .pryrc
+dot_install_gnu kitty.conf .config/kitty/kitty.conf
 
 
 if [[ -n "$CODESPACES" ]]; then

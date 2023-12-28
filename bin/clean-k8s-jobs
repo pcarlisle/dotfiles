@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+namespace=dependency-graph-api-production
+resource=job
+# shellcheck disable=SC2016
+awk_script=
+# Show matching records
+for partition in $(gh-k8s-clusters --profile general); do
+  if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
+    echo kubectl --context "${partition}" get jobs -n "${namespace}"
+    kubectl --context "${partition}" get jobs -n "${namespace}" | awk '$4 ~ /^[[:digit:]]+d/ || NR==1'
+    echo
+  fi
+done
+
+for partition in $(gh-k8s-clusters --profile general); do
+  if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
+    for pod in $(kubectl --context "${partition}" get jobs -n "${namespace}" | awk '$4 ~ /^[[:digit:]]+d/ { print $1 }'); do
+      echo kubectl --context "${partition}" -n "${namespace}" delete job "${pod}"
+    done
+  fi
+done

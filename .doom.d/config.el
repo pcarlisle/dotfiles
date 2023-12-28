@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Source Code Pro" :size 17 :weight 'semi-light)
+(setq doom-font (font-spec :family "Source Code Pro" :size 17 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "open sans" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -142,6 +142,3 @@
 ;; Somehow this is being interpreted backwards so set left alt to super and right alt to inputting weird characters
 (setq ns-right-alternate-modifier 'super)
 (setq ns-alternate-modifier 'none)
-
-(after! company
-  (setq company-idle-delay nil))
