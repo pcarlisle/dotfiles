@@ -46,8 +46,6 @@ dot_install_gnu .zlogin
 dot_install_gnu .doom.d
 dot_install_gnu .p10k.zsh
 dot_install_gnu .pryrc
-mkdir -p .config/kitty
-dot_install_gnu kitty.conf .config/kitty/kitty.conf
 
 
 if [[ -n "$CODESPACES" ]]; then
