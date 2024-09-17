@@ -53,3 +53,5 @@
 (package! evil-cleverparens)
 (package! lsp-treemacs)
 (package! protobuf-mode)
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))

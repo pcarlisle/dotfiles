@@ -49,11 +49,11 @@ bindkey -e
 zi ice depth=1
 zi light romkatv/powerlevel10k
 
-zi wait lucid from"gh-r" for \
-    sbin'**/bat -> bat' @sharkdp/bat \
-    sbin'**/fd -> fd' @sharkdp/fd \
-    sbin'**/rg -> rg' BurntSushi/ripgrep \
-    sbin'jq* -> jq' jqlang/jq
+# zi wait lucid from"gh-r" for \
+#     sbin'**/bat -> bat' @sharkdp/bat \
+#     sbin'**/fd -> fd' @sharkdp/fd \
+#     sbin'**/rg -> rg' BurntSushi/ripgrep \
+#     sbin'jq* -> jq' jqlang/jq
 
 # zi wait lucid for \
 #     atclone'cp -vf completions/exa.zsh _exa'  \
@@ -61,11 +61,26 @@ zi wait lucid from"gh-r" for \
 #     sbin'**/exa -> exa' \
 #   ogham/exa
 
+# zi wait lucid for \
+#     from'gh-r'  \
+#     sbin'**/fd -> fd' \
+#   @sharkdp/fd
 
+# git-delta in brew
 # zi wait lucid for \
 #     from'gh-r'  \
 #     sbin'**/delta -> delta' \
 #   dandavison/delta
+
+# zi wait lucid for \
+#     from'gh-r' \
+#     sbin'**/bat -> bat' \
+#   @sharkdp/bat
+
+# zi wait lucid for \
+#     from'gh-r' \
+#     sbin'**/rg -> rg' \
+#   BurntSushi/ripgrep
 
 zi snippet OMZL::git.zsh
 zi ice atload"unalias grv; unalias glo"
@@ -76,6 +91,12 @@ zi pack"bgn-binary+keys" for fzf
 
 zi ice wait lucid
 zi light Aloxaf/fzf-tab
+
+# zi ice wait"0a" lucid
+# zi light atuinsh/atuin
+
+# zi ice wait"0b" src"atuin-history.zsh" lucid atload'bindkey "^[[A" atuin-history-up; bindkey "^[[B" atuin-history-down; bindkey "${terminfo[kcuu1]}" atuin-history-up; bindkey "${terminfo[kcud1]}" atuin-history-down'
+# zi light ~/dotfiles/lib
 
 zi ice wait lucid atload'bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down; bindkey "${terminfo[kcuu1]}" history-substring-search-up; bindkey "${terminfo[kcud1]}" history-substring-search-down'
 zi light zsh-users/zsh-history-substring-search
@@ -248,6 +269,8 @@ fi
 if which bat > /dev/null; then
   alias cat='bat --style=plain'
 fi
+
+(( $+commands[nodenv] )) && eval "$(nodenv init -)"
 
 source ~/.zshalias
 

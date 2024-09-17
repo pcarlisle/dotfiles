@@ -60,9 +60,9 @@
 
 (setq flycheck-ruby-rubocop-executable "~/.rbenv/shims/rubocop")
 (add-hook 'ruby-mode-hook
-  (lambda ()
-    (setq-local flycheck-command-wrapper-function
-                (lambda (command) (append '("bundle" "exec") command)))))
+          (lambda ()
+            (setq-local flycheck-command-wrapper-function
+                        (lambda (command) (append '("bundle" "exec") command)))))
 
 
 ;; Seems to fix hanging at quit
@@ -75,7 +75,7 @@
 (setq doom-scratch-dir "~/.scratch")
 (setq doom-scratch-initial-major-mode 'org-mode)
 
-(setq +format-on-save-enabled-modes '(go-mode))
+(setq +format-on-save-disabled-modes '(yaml-mode))
 
 (setq lsp-go-codelenses
       '((gc_details . t)
@@ -111,6 +111,10 @@
        :desc "Wrap curly" :n "{" #'sp-wrap-curly
        :desc "Unwrap sexp" :n "u" #'sp-unwrap-sexp))
 
+(map! :after org-tree-slide
+      :map org-tree-slide-mode-map
+      :n "j" #'org-tree-slide-move-next-tree
+      :n "k" #'org-tree-slide-move-previous-tree)
 
 (use-package! evil-lisp-state
   :custom
@@ -127,8 +131,8 @@
 (defun go-flycheck-setup ()
   (flycheck-add-next-checker 'lsp 'golangci-lint))
 
-(defun sh-flycheck-setup ()
-  (flycheck-add-next-checker 'lsp 'sh-shellcheck))
+;; (defun sh-flycheck-setup ()
+;;   (flycheck-add-next-checker 'lsp 'sh-shellcheck))
 
 (add-hook 'go-mode-lsp-hook
           #'go-flycheck-setup)
@@ -142,3 +146,35 @@
 ;; Somehow this is being interpreted backwards so set left alt to super and right alt to inputting weird characters
 (setq ns-right-alternate-modifier 'super)
 (setq ns-alternate-modifier 'none)
+
+(setq +format-on-save-enabled-modes
+      '(go-mode))
+
+(custom-set-faces!  `(tree-sitter-hl-face:function.call :foreground ,(doom-color 'blue)))
+(custom-set-faces!  `(tree-sitter-hl-face:function.macro :foreground ,(doom-color 'blue)))
+
+(after! lsp-mode
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
+  (delete 'lsp-terraform lsp-client-packages))
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+(after! (evil copilot)
+  ;; Define the custom function that either accepts the completion or does the default behavior
+  (defun my/copilot-tab-or-default ()
+    (interactive)
+    (if (and (bound-and-true-p copilot-mode)
+             ;; Add any other conditions to check for active copilot suggestions if necessary
+             )
+        (copilot-accept-completion)
+      (evil-insert 1))) ; Default action to insert a tab. Adjust as needed.
+
+  ;; Bind the custom function to <tab> in Evil's insert state
+  (evil-define-key 'insert 'global (kbd "<tab>") 'my/copilot-tab-or-default))

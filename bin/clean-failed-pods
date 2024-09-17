@@ -3,15 +3,51 @@ namespace=dependency-graph-api-production
 for partition in $(gh-k8s-clusters --profile general); do
   if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
     echo kubectl --context "${partition}" get jobs -n "${namespace}"
-    kubectl delete pods --context "${partition}" -n "${namespace}" --field-selector status.phase==Failed --dry-run=client
+    kubectl delete pods --context "${partition}" -n "${namespace}" --field-selector status.phase==Failed
     echo
   fi
 done
 
-for partition in $(gh-k8s-clusters --profile general); do
+for context in $(gh-k8s-clusters --profile general); do
+  echo $context
+  kubectl --context="${context}" -n "${namespace}" get pdb
+done
+
+for partition in $(gh-k8s-clusters --profile general); Do
   if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
-    for pod in $(kubectl --context "${partition}" get jobs -n "${namespace}" | awk '$4 ~ /^[[:digit:]]+d/ { print $1 }'); do
-      echo kubectl --context "${partition}" -n "${namespace}" delete job "${pod}"
+    for pod in $(kubectl --context "${partition}" get pods -n "${namespace}" | awk '$4 ~ /^[[:digit:]]+d/ { print $1 }'); do
+      echo kubectl --context "${partition}" -n "${namespace}" delete pod "${pod}"
     done
   fi
 done
+
+for partition in $(gh-k8s-clusters --profile proxima); do
+  if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
+    for pod in $(kubectl --context "${partition}" get pods -n "${namespace}" | awk '$3 == "CrashLoopBackOff" { print $1 }'); do
+      kubectl --context "${partition}" -n "${namespace}" delete pod "${pod}"
+    done
+  fi
+done
+## PODS
+
+namespace=dependency-graph-api-production
+
+# display failed pods
+for partition in $(gh-k8s-clusters --profile $profile); do
+  if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
+    echo kubectl get pods --context "${partition}" -n "${namespace}" --field-selector status.phase==Failed
+    kubectl get pods --context "${partition}" -n "${namespace}" --field-selector status.phase==Failed
+    echo
+  fi
+done
+
+# delete failed pods
+for partition in $(gh-k8s-clusters --profile $profile); do
+  if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
+    kubectl delete pods --context "${partition}" -n "${namespace}" --field-selector status.phase==Failed
+    echo
+  fi
+done
+
+# Nicer view of job status
+kubectl --context general-2-ac4-iad get jobs -n dependency-graph-api-production -o json | jq -r '.items[] | select (.status.conditions != null) | (.metadata.name + " " + .status.conditions[].type)' | column -t

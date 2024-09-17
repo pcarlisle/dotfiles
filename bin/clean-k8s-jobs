@@ -5,7 +5,7 @@ resource=job
 # shellcheck disable=SC2016
 awk_script=
 # Show matching records
-for partition in $(gh-k8s-clusters --profile general); do
+for partition in $(gh-k8s-clusters --profile proxima); do
   if kubectl --context "${partition}" get namespace "${namespace}" &> /dev/null; then
     echo kubectl --context "${partition}" get jobs -n "${namespace}"
     kubectl --context "${partition}" get jobs -n "${namespace}" | awk '$4 ~ /^[[:digit:]]+d/ || NR==1'
